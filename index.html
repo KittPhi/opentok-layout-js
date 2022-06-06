@@ -1,215 +1,321 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE >
 
 <html>
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Layout Test</title>
-        <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
-        <script src="opentok-layout.js"></script>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Layout Test</title>
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+    <script src="opentok-layout.js"></script>
 
-        <style type="text/css" media="screen">
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            #layout {
-                position: absolute;
-                top: 140px;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #DDD;
-            }
+    <style type="text/css" media="screen">
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #layout {
+        position: absolute;
+        top: 140px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ddd;
+      }
 
-            #layout > div {
-                background-color: #000;
-                display: inline-block;
-                border: 1px solid #fff;
+      #layout > div {
+        background-color: #000;
+        display: inline-block;
+        border: 1px solid #fff;
 
-                transition-property: all;
-                transition-duration: 0.5s;
-            }
+        transition-property: all;
+        transition-duration: 0.5s;
+      }
 
-            #layout > div {
-                width: 0;
-                height: 0;
-                opacity: 0;
-            }
+      #layout > div {
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
 
-            #layout > div.ot-layout {
-                opacity: 1;
-            }
+      #layout > div.ot-layout {
+        opacity: 1;
+      }
 
-            body > div#description {
-                color: #333;
-                margin: 0;
-                width: 100%;
-                text-align: center;
-            }
+      body > div#description {
+        color: #333;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+      }
 
-            input[type="button"] {
-                width: 100px;
-                height: 25px;
-                border: none;
-                border-radius: 5px;
-                color: white;
-                margin-right: 5px;
-                font-size: 14px;
-            }
+      input[type='button'] {
+        width: 100px;
+        height: 25px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        margin-right: 5px;
+        font-size: 14px;
+      }
 
-            input[type="text"] {
-              width: 35px;
-            }
+      input[type='text'] {
+        width: 35px;
+      }
 
-            input#add {
-                background-color: #67AB4D;
-            }
+      input#add {
+        background-color: #67ab4d;
+      }
 
-            input#remove {
-                background-color: #C24442;
-            }
+      input#remove {
+        background-color: #c24442;
+      }
 
-            label {
-              margin-left: 5px;
-              margin-right: 2px;
-              font-weight: bold;
-            }
+      label {
+        margin-left: 5px;
+        margin-right: 2px;
+        font-weight: bold;
+      }
 
-            #buttons {
-              margin-top: 10px;
-              width: 100%;
-              text-align: center;
-            }
+      #buttons {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
 
-            #advanced {
-              display: none;
-              margin-bottom: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="layout"></div>
-        <div id="description">Click the Add/Remove buttons to add and remove video windows. Go ahead and resize the window and see it lay out automatically!<br>
-            Double-click on elements to make them bigger or smaller</div>
-        <div id="buttons">
-          <div id="advanced">
-            <label>maxRatio</label><input id="maxRatio" type="text" name="maxRatio" value="3/2">
-            <label>minRatio</label><input id="minRatio" type="text" name="minRatio" value="9/16">
-            <label>alignItems</label><input id="alignItems" type="text" name="alignItems" value="center">
-            <label>fixedRatio</label><input id="fixedRatio" type="text" name="fixedRatio" value="false">
-            <label>scaleLastRow</label><input id="scaleLastRow" type="text" name="scaleLastRow" value="true">
-            <label>bigPercentage</label><input id="bigPercentage" type="text" name="bigPercentage" value="0.8">
-            <label>minBigPercentage</label><input id="minBigPercentage" type="text" name="minBigPercentage" value="0">
-            <label>bigFixedRatio</label><input id="bigFixedRatio" type="text" name="bigFixedRatio" value="false">
-            <label>bigScaleLastRow</label><input id="bigScaleLastRow" type="text" name="bigScaleLastRow" value="true">
-            <label>bigAlignItems</label><input id="bigAlignItems" type="text" name="bigAlignItems" value="center">
-            <label>smallAlignItems</label><input id="smallAlignItems" type="text" name="smallAlignItems" value="center">
-            <label>bigMaxRatio</label><input id="bigMaxRatio" type="text" name="bigMaxRatio" value="3/2">
-            <label>bigMinRatio</label><input id="bigMinRatio" type="text" name="bigMinRatio" value="9/16">
-            <label>bigFirst</label><input id="bigFirst" type="text" name="bigFirst" value="true">
-            <label>maxWidth</label><input id="maxWidth" type="text" name="maxWidth" value="Infinity">
-            <label>maxHeight</label><input id="maxHeight" type="text" name="maxHeight" value="Infinity">
-            <label>smallMaxWidth</label><input id="smallMaxWidth" type="text" name="smallMaxWidth" value="Infinity">
-            <label>smallMaxHeight</label><input id="smallMaxHeight" type="text" name="smallMaxHeight" value="Infinity">
-            <label>bigMaxWidth</label><input id="bigMaxWidth" type="text" name="bigMaxWidth" value="Infinity">
-            <label>bigMaxHeight</label><input id="bigMaxHeight" type="text" name="bigMaxHeight" value="Infinity">
-            <label>animateDuration</label><input id="animateDuration" type="text" name="animateDuration" value="200">
-            <label>animateEasing</label><input id="animateEasing" type="text" name="animateEasing" value="swing">
-            <label>add live video</label><input type="checkbox" id="useLiveVideo" checked>
-          </div>
-          <input type="button" name="add" value="Add" id="add" onclick="addElement()">
-          <input type="button" name="remove" value="Remove" id="remove" onclick="removeElement()">
-          <a href="#advanced" onclick="showAdvanced()" id="showAdvancedLink">Advanced</a>
-        </div>
-    </body>
-    <script type="text/javascript" charset="utf-8">
-        var layoutEl = document.getElementById("layout");
-        var layout;
+      #advanced {
+        display: none;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="layout"></div>
+    <div id="description">
+      Click the Add/Remove buttons to add and remove video windows. Go ahead and
+      resize the window and see it lay out automatically!<br />
+      Double-click on elements to make them bigger or smaller
+    </div>
+    <div id="buttons">
+      <div id="advanced">
+        <label>maxRatio</label
+        ><input id="maxRatio" type="text" name="maxRatio" value="3/2" />
+        <label>minRatio</label
+        ><input id="minRatio" type="text" name="minRatio" value="9/16" />
+        <label>alignItems</label
+        ><input id="alignItems" type="text" name="alignItems" value="center" />
+        <label>fixedRatio</label
+        ><input id="fixedRatio" type="text" name="fixedRatio" value="false" />
+        <label>scaleLastRow</label
+        ><input
+          id="scaleLastRow"
+          type="text"
+          name="scaleLastRow"
+          value="true"
+        />
+        <label>bigPercentage</label
+        ><input
+          id="bigPercentage"
+          type="text"
+          name="bigPercentage"
+          value="0.8"
+        />
+        <label>minBigPercentage</label
+        ><input
+          id="minBigPercentage"
+          type="text"
+          name="minBigPercentage"
+          value="0"
+        />
+        <label>bigFixedRatio</label
+        ><input
+          id="bigFixedRatio"
+          type="text"
+          name="bigFixedRatio"
+          value="false"
+        />
+        <label>bigScaleLastRow</label
+        ><input
+          id="bigScaleLastRow"
+          type="text"
+          name="bigScaleLastRow"
+          value="true"
+        />
+        <label>bigAlignItems</label
+        ><input
+          id="bigAlignItems"
+          type="text"
+          name="bigAlignItems"
+          value="center"
+        />
+        <label>smallAlignItems</label
+        ><input
+          id="smallAlignItems"
+          type="text"
+          name="smallAlignItems"
+          value="center"
+        />
+        <label>bigMaxRatio</label
+        ><input id="bigMaxRatio" type="text" name="bigMaxRatio" value="3/2" />
+        <label>bigMinRatio</label
+        ><input id="bigMinRatio" type="text" name="bigMinRatio" value="9/16" />
+        <label>bigFirst</label
+        ><input id="bigFirst" type="text" name="bigFirst" value="true" />
+        <label>maxWidth</label
+        ><input id="maxWidth" type="text" name="maxWidth" value="Infinity" />
+        <label>maxHeight</label
+        ><input id="maxHeight" type="text" name="maxHeight" value="Infinity" />
+        <label>smallMaxWidth</label
+        ><input
+          id="smallMaxWidth"
+          type="text"
+          name="smallMaxWidth"
+          value="Infinity"
+        />
+        <label>smallMaxHeight</label
+        ><input
+          id="smallMaxHeight"
+          type="text"
+          name="smallMaxHeight"
+          value="Infinity"
+        />
+        <label>bigMaxWidth</label
+        ><input
+          id="bigMaxWidth"
+          type="text"
+          name="bigMaxWidth"
+          value="Infinity"
+        />
+        <label>bigMaxHeight</label
+        ><input
+          id="bigMaxHeight"
+          type="text"
+          name="bigMaxHeight"
+          value="Infinity"
+        />
+        <label>animateDuration</label
+        ><input
+          id="animateDuration"
+          type="text"
+          name="animateDuration"
+          value="200"
+        />
+        <label>animateEasing</label
+        ><input
+          id="animateEasing"
+          type="text"
+          name="animateEasing"
+          value="swing"
+        />
+        <label>add live video</label
+        ><input type="checkbox" id="useLiveVideo" checked />
+      </div>
+      <input
+        type="button"
+        name="add"
+        value="Add"
+        id="add"
+        onclick="addElement()"
+      />
+      <input
+        type="button"
+        name="remove"
+        value="Remove"
+        id="remove"
+        onclick="removeElement()"
+      />
+      <!-- <a href="#advanced" onclick="showAdvanced()" id="showAdvancedLink">Advanced</a> -->
+    </div>
+  </body>
+  <script type="text/javascript" charset="utf-8">
+    var layoutEl = document.getElementById('layout');
+    var layout;
 
-        function updateLayoutValues() {
-          layout = initLayoutContainer(layoutEl, {
-              maxRatio: eval(maxRatio.value),
-              minRatio: eval(minRatio.value),
-              fixedRatio: eval(fixedRatio.value),
-              alignItems: alignItems.value,
-              bigPercentage: eval(bigPercentage.value),
-              minBigPercentage: eval(minBigPercentage.value),
-              bigFixedRatio: eval(bigFixedRatio.value),
-              bigMaxRatio: eval(bigMaxRatio.value),
-              bigMinRatio: eval(bigMinRatio.value),
-              bigFirst: eval(bigFirst.value),
-              smallMaxWidth: eval(smallMaxWidth.value),
-              smallMaxHeight: eval(smallMaxHeight.value),
-              maxWidth: eval(maxWidth.value),
-              maxHeight: eval(maxHeight.value),
-              bigMaxWidth: eval(bigMaxWidth.value),
-              bigMaxHeight: eval(bigMaxHeight.value),
-              bigAlignItems: bigAlignItems.value,
-              smallAlignItems: smallAlignItems.value,
-              scaleLastRow: eval(scaleLastRow.value),
-              bigScaleLastRow: eval(bigScaleLastRow.value),
-          }).layout;
-        }
-        updateLayoutValues();
+    function updateLayoutValues() {
+      layout = initLayoutContainer(layoutEl, {
+        maxRatio: eval(maxRatio.value),
+        minRatio: eval(minRatio.value),
+        fixedRatio: eval(fixedRatio.value),
+        alignItems: alignItems.value,
+        bigPercentage: eval(bigPercentage.value),
+        minBigPercentage: eval(minBigPercentage.value),
+        bigFixedRatio: eval(bigFixedRatio.value),
+        bigMaxRatio: eval(bigMaxRatio.value),
+        bigMinRatio: eval(bigMinRatio.value),
+        bigFirst: eval(bigFirst.value),
+        smallMaxWidth: eval(smallMaxWidth.value),
+        smallMaxHeight: eval(smallMaxHeight.value),
+        maxWidth: eval(maxWidth.value),
+        maxHeight: eval(maxHeight.value),
+        bigMaxWidth: eval(bigMaxWidth.value),
+        bigMaxHeight: eval(bigMaxHeight.value),
+        bigAlignItems: bigAlignItems.value,
+        smallAlignItems: smallAlignItems.value,
+        scaleLastRow: eval(scaleLastRow.value),
+        bigScaleLastRow: eval(bigScaleLastRow.value),
+      }).layout;
+    }
+    updateLayoutValues();
 
-        function showAdvanced() {
-          advanced.style.display = 'block';
-          showAdvancedLink.style.display = 'none';
-        }
+    function showAdvanced() {
+      advanced.style.display = 'block';
+      showAdvancedLink.style.display = 'none';
+    }
 
-        const getRandomRGB = () => Math.round(Math.random() * 255);
-        function getRandomColour() {
-          return `rgb(${getRandomRGB()}, ${getRandomRGB()}, ${getRandomRGB()}`;
-        }
+    const getRandomRGB = () => Math.round(Math.random() * 255);
+    function getRandomColour() {
+      return `rgb(${getRandomRGB()}, ${getRandomRGB()}, ${getRandomRGB()}`;
+    }
 
-        var ratios = [4/3, 3/4, 16/9];
-        function addElement() {
-          var el = document.createElement("div");
-          if (useLiveVideo.checked) {
-            OT.initPublisher(el, {
-                resolution: "1280x720"
-            }, function (err) {
-                layout();
-            });
-          } else {
-            el.videoHeight = 480;
-            // Pick a random ratio
-            var ratio = ratios[Math.round(Math.random() * (ratios.length - 1))];
-            el.videoWidth = 480 * ratio;
-            el.style.backgroundColor = getRandomColour();
+    var ratios = [4 / 3, 3 / 4, 16 / 9];
+    function addElement() {
+      var el = document.createElement('div');
+      if (useLiveVideo.checked) {
+        OT.initPublisher(
+          el,
+          {
+            resolution: '1280x720',
+          },
+          function (err) {
+            layout();
           }
-          el.addEventListener('dblclick', function () {
-            if (el.classList.contains('OT_big')) {
-              el.classList.remove('OT_big');
-            } else {
-              el.classList.add('OT_big');
-            }
-            layout();
-          });
-          layoutEl.appendChild(el);
-          layout();
+        );
+      } else {
+        el.videoHeight = 480;
+        // Pick a random ratio
+        var ratio = ratios[Math.round(Math.random() * (ratios.length - 1))];
+        el.videoWidth = 480 * ratio;
+        el.style.backgroundColor = getRandomColour();
+      }
+      el.addEventListener('dblclick', function () {
+        if (el.classList.contains('OT_big')) {
+          el.classList.remove('OT_big');
+        } else {
+          el.classList.add('OT_big');
         }
+        layout();
+      });
+      layoutEl.appendChild(el);
+      layout();
+    }
 
-        function removeElement() {
-          layoutEl.firstChild.classList.remove('ot-layout');
-          setTimeout(function() {
-            layoutEl.removeChild(layoutEl.firstChild);
-            layout();
-          }, 200);
-        }
+    function removeElement() {
+      layoutEl.firstChild.classList.remove('ot-layout');
+      setTimeout(function () {
+        layoutEl.removeChild(layoutEl.firstChild);
+        layout();
+      }, 200);
+    }
 
-        var resizeTimeout;
-        window.onresize = function() {
-          clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(function () {
-            layout();
-          }, 20);
-        };
+    var resizeTimeout;
+    window.onresize = function () {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function () {
+        layout();
+      }, 20);
+    };
 
-        document.querySelectorAll("input[type='text']").forEach(function(el) {
-            el.addEventListener('change', function() {
-                updateLayoutValues();
-            });
-        });
-    </script>
+    document.querySelectorAll("input[type='text']").forEach(function (el) {
+      el.addEventListener('change', function () {
+        updateLayoutValues();
+      });
+    });
+  </script>
 </html>
